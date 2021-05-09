@@ -32,13 +32,18 @@ namespace EnglishTest.CompletingTasks
             ((Button)sender).BackColor = ((Button)sender).Enabled ? Color.White : Color.Gray;
         }
 
-        bool Close = false;
+        bool isClose = false;
         private void Task_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Close) return;
-            Close = true;
+            if (isClose) return;
+            isClose = true;
             recorder.StopTask();
             Application.Exit();
+        }
+
+        private void TextTask_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

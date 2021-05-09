@@ -84,6 +84,7 @@ namespace EnglishTest.CompletingTasks
                 audioFile = null;
                 btnPlay.Enabled = true;
                 btnStart.Enabled = true;
+                if (DeleteFile) DeleteTestFile();
             };
             Player.Play();
             btnStop.Enabled = false;
@@ -101,7 +102,7 @@ namespace EnglishTest.CompletingTasks
 
 
             if (StartForm.CloseApplication())
-            {                
+            {
                 Clear();
                 Application.Exit();
             }
@@ -116,11 +117,10 @@ namespace EnglishTest.CompletingTasks
             WaveIn?.Dispose();
             Writer?.Close();
             Writer?.Dispose();
-            DeleteTestFile();
+            DeleteFile = true;
             if (Player != null)
             {
                 Player.Stop();
-                Player.Dispose();
             }
         }
         private void DeleteTestFile()
@@ -128,6 +128,7 @@ namespace EnglishTest.CompletingTasks
             if (File.Exists(Path.Combine(WaveRecorder.SavePath, "Test.wav")))
             {
                 File.Delete(Path.Combine(WaveRecorder.SavePath, "Test.wav"));
+                DeleteFile = false;
             }
         }
 
@@ -137,6 +138,7 @@ namespace EnglishTest.CompletingTasks
         }
 
         bool Continue = false;
+        bool DeleteFile = true;
         private void BtnContinue_Click(object sender, EventArgs e)
         {
             new Reading().Show();
@@ -144,7 +146,6 @@ namespace EnglishTest.CompletingTasks
             this.Close();
         }
 
-        bool IsPlaying = false;
         private void Timer1_Tick(object sender, EventArgs e)
         {
             int t = Writer.TotalTime.Seconds;

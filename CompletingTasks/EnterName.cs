@@ -17,7 +17,7 @@ namespace EnglishTest.CompletingTasks
         {
             InitializeComponent();
         }
-        string SelectedPath = "";
+        string SavePath = Path.Combine(Application.StartupPath, "Audio");
         private void EnterName_Load(object sender, EventArgs e)
         {
 
@@ -25,13 +25,26 @@ namespace EnglishTest.CompletingTasks
 
         private void BtnContinue_Click(object sender, EventArgs e)
         {
-            if(textName.Text!="" && SelectedPath != "")
+            if(txtName.Text!="" && txtLastName.Text!="" && txtClass.Text!="")
             {
                 foreach (var i in Path.GetInvalidFileNameChars())
                 {
-                    if (textName.Text.Contains(i)) return;
+                    if (txtName.Text.Contains(i))
+                    {
+                        MessageBox.Show("Неверные значения!");
+                        return;
+                    }
                 }
-                WaveRecorder.SavePath = Path.Combine(SelectedPath, textName.Text);
+                string path1 = Path.Combine(txtClass.Text, txtName.Text + " " + txtLastName.Text);
+                string path2 = "/Audio/" + txtClass.Text + "/" + txtName.Text + " " + txtLastName.Text;
+                if (Task.Run(() => DiscWriter.CheckUserPassed(path2)).Result)
+                {
+                    MessageBox.Show("Пользователь уже проходил тест");
+                    return;
+                }
+                WaveRecorder.SavePath = Path.Combine(SavePath, path1);
+                DiscWriter.SavePath += "/" + txtClass.Text;
+                DiscWriter.SavePath += "/" + txtName.Text + " " + txtLastName.Text;
                 if (!Directory.Exists(WaveRecorder.SavePath)) Directory.CreateDirectory(WaveRecorder.SavePath);
                 new CheckAudio().Show();
                 this.Close();
@@ -42,16 +55,6 @@ namespace EnglishTest.CompletingTasks
         private void TextName_TextChanged(object sender, EventArgs e)
         {
             
-        }
-
-        private void BtnDirectory_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
-            if (folderBrowser.ShowDialog() == DialogResult.OK)
-            {
-                SelectedPath = folderBrowser.SelectedPath;
-                label2.Text = SelectedPath;
-            }
         }
     }
 }

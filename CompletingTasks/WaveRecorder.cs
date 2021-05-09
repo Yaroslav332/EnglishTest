@@ -81,15 +81,18 @@ namespace EnglishTest.CompletingTasks
                 Writer.Close();
                 Writer?.Dispose();
                 WaveIn.Dispose();
+                Uploading = Task.Run(() => DiscWriter.UploadFile(Path.Combine(SavePath, TaskName), TaskName));
+                Task.WaitAll(Uploading);
+                StartNextTask?.Invoke();
             };
             WaveIn.StartRecording();
         }
         public void StopTask()
         {
             WaveIn?.StopRecording();
-            StartNextTask?.Invoke();
         }
 
         public Action StartNextTask;
+        public Task Uploading;
     }
 }

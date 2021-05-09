@@ -24,9 +24,9 @@ namespace EnglishTest
                 "winter.Most have left your area.T" +
                 "hose that stay are not as active.";
             v.Task2Text = "You are considering visiting the city and now you'd like to get more information. In 1.5 minutes you are to ask five direct questions to find out the following:";
-            v.Task2Image = Image.FromFile(@"C:\Users\Home\Downloads\maxresdefault.jpg");
-            v.Task3Image_1 = Image.FromFile(@"C:\Users\Home\Downloads\maxresdefault.jpg");
-            v.Task3Image_2 = Image.FromFile(@"C:\Users\Home\Downloads\5pgns16.jpg");
+            v.Task2Image = Image.FromFile(@"C:\Users\Home\Downloads\06700.jpg");
+            v.Task3Image_1 = Image.FromFile(@"C:\Users\Home\Downloads\y_0bLpZbdSU.jpg");
+            v.Task3Image_2 = Image.FromFile(@"C:\Users\Home\Downloads\2w9v46.jpg");
             v.Task3Text = "Study the two photographs. In 1.5 minutes be ready to compare and contrast the photographs:";
             TaskVariant.ActiveTask = v;
             Form c = new CompletingTasks.EnterName();
